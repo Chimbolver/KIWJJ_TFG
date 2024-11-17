@@ -1,0 +1,401 @@
+body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #3e3e3e;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+}
+.fa-shopping-cart{
+  color: rgb(203, 177, 130);
+  width: 40px;
+  transition: transform 0.3s ease;
+}
+.cart-icon{
+    font-size: 25px;
+}
+
+.fa-shopping-cart:hover{
+    transform: scale(1.2);
+    color: #cfe2a5;
+}
+
+.logo {
+    
+    height: 50px;
+    width: auto;
+    animation: rotar 5s linear infinite;
+    
+}
+@keyframes rotar {
+    from {
+        transform: rotateY(90deg);
+    }
+    to {
+        transform: rotateY(-90deg);
+    }
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.nav-menu ul li {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 50px;
+    transition: transform 0.3s ease;
+}
+
+.nav-menu ul li:hover {    
+    transform: translateX(10px);
+}
+
+.nav-menu ul li a {
+    font-weight: bold;
+    color: #f5f5f0;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.nav-menu ul li a:hover {
+    color: #cfe2a5;
+    transform: translateX(10px);
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-info span {
+    margin-right: 10px;
+}
+
+.dropdown-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #f5f5f0;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: #5b5b5b;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-menu a {
+    color: rgb(255, 255, 255);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu a:hover {
+    transition: transform 0.5s ease, color 0.3s ease;
+    transform: translateX(10px);
+    color: #cfe2a5;
+}
+
+.login-icon {
+    transition: transform 0.5s ease, color 0.3s ease;
+    font-size: 1.5em;
+    color: #f5f5f0;
+}
+
+.login-icon:hover {
+    transform: rotate(360deg) scale(1.4);
+    color: #cfe2a5;
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #f5f5f0;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    z-index: 3;
+}
+
+.nav-toggle:hover {
+    transform: rotate(90deg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-menu ul {
+        flex-direction: column;
+        background-color: #3e3e3e;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        display: none;
+        transition: opacity 0.5s ease-in-out;
+        z-index: 2;
+    }
+
+    .nav-menu.active ul {
+        display: flex;
+        animation: fadeIn 0.5s forwards;
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        flex-wrap: wrap;
+        text-align: center;
+    }
+
+    .logo {
+        margin: auto;
+    }
+
+    .user-info span {
+        font-size: 0.9em;
+    }
+}
+
+/* Animaciones adicionales */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #3e3e3e;
+    color: #fff;
+    position: relative;
+    z-index: 2;
+}
+.fa-shopping-cart{
+  color: rgb(203, 177, 130);
+  width: 40px;
+  transition: transform 0.3s ease;
+}
+.cart-icon{
+    font-size: 25px;
+}
+
+.fa-shopping-cart:hover{
+    transform: scale(1.2);
+    color: #cfe2a5;
+}
+
+.logo {
+    
+    height: 50px;
+    width: auto;
+    animation: rotar 5s linear infinite;
+    
+}
+@keyframes rotar {
+    from {
+        transform: rotateY(90deg);
+    }
+    to {
+        transform: rotateY(-90deg);
+    }
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.nav-menu ul li {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 50px;
+    transition: transform 0.3s ease;
+}
+
+.nav-menu ul li:hover {    
+    transform: translateX(10px);
+}
+
+.nav-menu ul li a {
+    font-weight: bold;
+    color: #f5f5f0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-menu ul li a:hover {
+    color: #cfe2a5;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+}
+
+.user-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.user-info span {
+    margin-right: 10px;
+}
+
+.dropdown-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #f5f5f0;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: #5b5b5b;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-menu a {
+    color: rgb(255, 255, 255);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu a:hover {
+    transition: transform 0.5s ease, color 0.3s ease;
+    transform: translateX(10px);
+    color: #cfe2a5;
+}
+
+.login-icon {
+    transition: transform 0.5s ease, color 0.3s ease;
+    font-size: 1.5em;
+    color: #f5f5f0;
+}
+
+.login-icon:hover {
+    transform: rotate(360deg) scale(1.4);
+    color: #cfe2a5;
+}
+
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #f5f5f0;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    z-index: 3;
+}
+
+.nav-toggle:hover {
+    transform: rotate(90deg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-menu ul {
+        flex-direction: column;
+        background-color: #3e3e3e;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        display: none;
+        transition: opacity 0.5s ease-in-out;
+        z-index: 2;
+    }
+
+    .nav-menu.active ul {
+        display: flex;
+        animation: fadeIn 0.5s forwards;
+    }
+
+    .nav-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        flex-wrap: wrap;
+        text-align: center;
+    }
+
+    .logo {
+        margin: auto;
+    }
+
+    .user-info span {
+        font-size: 0.9em;
+    }
+}
+
+/* Animaciones adicionales */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

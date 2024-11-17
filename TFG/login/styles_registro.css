@@ -1,5 +1,4 @@
-/* styles.css */
-
+/* Estilos Generales */
 * {
     margin: 0;
     padding: 0;
@@ -10,29 +9,53 @@
 body {
     background: linear-gradient(120deg, #f0ece6, #7a6e5d);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     color: #3e3e3e;
+    padding: 15px;
+
 }
 
+.logo {
+    height: 15vh;
+    width: auto;
+    max-width: 150px;
+    animation: rotar 5s linear infinite;
+    margin-bottom: 20px;
+    z-index: 10; /* Asegura que el logo esté sobre el formulario */
+}
+.logo:hover {
+    cursor: pointer;
+}
+
+@keyframes rotar {
+    from {
+        transform: rotateY(90deg);
+    }
+    to {
+        transform: rotateY(-90deg);
+    }
+}
 
 .registro-container {
-    margin-top: 140px;
-    background: #3e3e3e ;
+    background: #3e3e3e;
     padding: 40px;
     border-radius: 15px;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     text-align: center;
-    width: 320px;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px; /* Añade un espacio entre el logo y el formulario */
 }
 
- h1 {
+.registro-container h1 {
     margin-bottom: 20px;
     font-size: 2em;
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.85);
+    color: #e4e2e2;
     text-transform: uppercase;
 }
 
@@ -46,9 +69,9 @@ body {
     padding: 10px;
     background: transparent;
     border: none;
-    border-bottom: 2px solid #a19f9f;
+    border-bottom: 2px solid #817b76;
     outline: none;
-    color:  #c0b7ae;
+    color: #d1caca;
     font-size: 1em;
 }
 
@@ -56,7 +79,7 @@ body {
     position: absolute;
     top: 10px;
     left: 0;
-    color: #c0b7ae;
+    color: rgba(245, 245, 245, 0.799);
     font-size: 0.9em;
     pointer-events: none;
     transition: 0.5s;
@@ -64,22 +87,21 @@ body {
 
 .input-group input:focus ~ label,
 .input-group input:valid ~ label {
-
     font-size: 0.8em;
-    color: #7a6e5d;
+    color: #f8dab1;
+    top: -20px;
 }
-.link_registrarse{
+
+.link_registrarse {
     text-decoration: none;
-    color: #f5f5f0;
-
+    color: #b1a086;
 }
 
-.texto-registro{
-    color: #f7e5ca;
-}
+
+
 button {
     background: #7a6e5d;
-    border: 2px solid #7a6e5d;
+    border: 2px solid #827f7a;
     color: #f5f5f0;
     padding: 10px 20px;
     font-size: 1em;
@@ -87,79 +109,75 @@ button {
     cursor: pointer;
     transition: 0.4s;
 }
+.texto-registro{
 
+    color: #e4e2e2;
+}
 button:hover {
-    background: #f0ece6;
-    color: #5e5345 ;
+    background: #4a4136;
+    color: #dfd7cd;
     transform: scale(1.05);
 }
-
+.link_registrarse:hover{
+ color: wheat;
+}
 .error-msg {
     font-size: 20px;
     width: 200px;
     background-color: rgba(150, 75, 0, 0.7);
     color: #f5f5f0;
     border: 1px solid #f0ece6;
-}
-.input-group {
-    position: relative;
-    margin-bottom: 25px;
+    margin: 15px auto;
+    border-radius: 5px;
 }
 
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid #c0b7ae;
-    outline: none;
-    color: #c0b7ae;
-    font-size: 1em;
-}
-
-.input-group label {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    color: #c0b7ae;
-    font-size: 0.9em;
-    pointer-events: none;
-    transition: 0.5s;
-}
-
-/* Estilo para el icono de mostrar/ocultar */
 .toggle-password {
     position: absolute;
     right: 10px;
     top: 10px;
     font-size: 1em;
     cursor: pointer;
-    color: #c0b7ae;
+    color: #7a6e5d;
     user-select: none;
 }
 
-.input-group input:focus ~ label,
-.input-group input:valid ~ label {
-    top: -20px;
-    font-size: 0.8em;
-    color: #d2c4b0;
+/* Responsividad */
+@media (max-width: 768px) {
+    .login-container, .registro-container {
+        width: 90%;
+        padding: 30px;
+    }
+    
+    .logo {
+        height: 12vh;
+        max-width: 120px;
+    }
+    
+    button {
+        width: 100%;
+    }
 }
 
-.logo{
-    position: absolute;
-    height: 15vh;
-    width: 11vw;
-    margin-bottom: 560px;
-    animation: rotar 5s linear infinite;
-}
-.logo:hover{
-    cursor: pointer;
-}
-@keyframes rotar {
-    from{
-        transform: rotateY(-90deg);
+@media (max-width: 480px) {
+    .login-container, .registro-container {
+        padding: 20px;
     }
-    to{
-        transform: rotateY(90deg);
+    
+    .login-container h1 {
+        font-size: 1.5em;
+    }
+    
+    .logo {
+        height: 10vh;
+        max-width: 100px;
+    }
+    
+    button {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .input-group input {
+        font-size: 0.9em;
     }
 }
