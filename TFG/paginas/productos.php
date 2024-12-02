@@ -10,14 +10,35 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-$sqlSneakers = "SELECT * FROM sneakers WHERE estado = 'Disponible' AND id_sneaker NOT IN (SELECT id_sneaker FROM sneakers_usuarios)";
-$resultSneakers = $conn->query($sqlSneakers);
+// Obtener la marca seleccionada
+$marcaSeleccionada = isset($_GET['marca']) ? $_GET['marca'] : '';
 
+// Consulta principal con filtro por marca
+$sqlSneakers = "SELECT * FROM sneakers WHERE estado = 'Disponible' AND id_sneaker NOT IN (SELECT id_sneaker FROM sneakers_usuarios)";
+if ($marcaSeleccionada) {
+    $sqlSneakers .= " AND marca = ?";
+}
+$stmtSneakers = $conn->prepare($sqlSneakers);
+if ($marcaSeleccionada) {
+    $stmtSneakers->bind_param("s", $marcaSeleccionada);
+}
+$stmtSneakers->execute();
+$resultSneakers = $stmtSneakers->get_result();
+
+// Consulta para zapatillas de usuarios
 $sqlSneakersUsuarios = "SELECT s.*, u.nombre as usuario_nombre FROM sneakers_usuarios su 
                         JOIN sneakers s ON su.id_sneaker = s.id_sneaker 
                         JOIN usuarios u ON su.id_usuario = u.id_usuario 
                         WHERE s.estado = 'Disponible'";
-$resultSneakersUsuarios = $conn->query($sqlSneakersUsuarios);
+if ($marcaSeleccionada) {
+    $sqlSneakersUsuarios .= " AND s.marca = ?";
+}
+$stmtSneakersUsuarios = $conn->prepare($sqlSneakersUsuarios);
+if ($marcaSeleccionada) {
+    $stmtSneakersUsuarios->bind_param("s", $marcaSeleccionada);
+}
+$stmtSneakersUsuarios->execute();
+$resultSneakersUsuarios = $stmtSneakersUsuarios->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +71,7 @@ $resultSneakersUsuarios = $conn->query($sqlSneakersUsuarios);
 
         .product-card img {
             width: 100%;
-            height: auto;
+            height: 180px;
             transition: transform 0.4s ease-in-out;
         }
 
@@ -83,35 +104,34 @@ $resultSneakersUsuarios = $conn->query($sqlSneakersUsuarios);
 </head>
 
 <body>
-    <div class="texto-zapas"><h2  style="text-align:center;">Sneakers Disponibles</h2></div>
+    <!-- Formulario de filtro -->
+    <div class="filter-container" style="text-align:center; margin-bottom:20px;">
+        <form method="GET">
+            <label for="marca">Filtrar por marca:</label>
+            <select name="marca" id="marca">
+                <option value="">Todas</option>
+                <option value="NIKE" <?php echo $marcaSeleccionada === 'NIKE' ? 'selected' : ''; ?>>NIKE</option>
+                <option value="PUMA" <?php echo $marcaSeleccionada === 'PUMA' ? 'selected' : ''; ?>>PUMA</option>
+                <option value="ADIDAS" <?php echo $marcaSeleccionada === 'ADIDAS' ? 'selected' : ''; ?>>ADIDAS</option>
+                <option value="BALENCIAGA" <?php echo $marcaSeleccionada === 'BALENCIAGA' ? 'selected' : ''; ?>>BALENCIAGA</option>
+                <option value="RICK OWENS" <?php echo $marcaSeleccionada === 'RICK OWENS' ? 'selected' : ''; ?>>RICK OWENS</option>
+                <option value="NEW BALANCE" <?php echo $marcaSeleccionada === 'NEW BALANCE' ? 'selected' : ''; ?>>NEW BALANCE</option>
+            </select>
+            <button type="submit">Aplicar</button>
+        </form>
+    </div>
+
+    <div class="texto-zapas"><h2 style="text-align:center;">Sneakers Disponibles</h2></div>
     <div class="product-container">
 
         <?php while ($row = $resultSneakers->fetch_assoc()): ?>
             <div class="product-card" id="product-<?php echo $row['id_sneaker']; ?>">
-                <img src="../imagenes/<?php echo $row['imagen_url']; ?>" alt="<?php echo $row['nombre_sneaker']; ?>">
+                <img src="data:image/jpeg;base64,<?php echo base64_encode($row['imagen_url']); ?>" alt="<?php echo $row['nombre_sneaker']; ?>">
                 <div class="product-info">
                     <h3><?php echo $row['nombre_sneaker']; ?></h3>
                     <p>Marca: <?php echo $row['marca']; ?></p>
                     <p>Talla: <?php echo $row['talla']; ?></p>
                     <p>Precio: €<?php echo $row['precio']; ?></p>
-                    <p id="stock-<?php echo $row['id_sneaker']; ?>">Stock: <?php echo $row['stock']; ?></p>
-                    <button class="add-to-cart" id="button-<?php echo $row['id_sneaker']; ?>" onclick="addToCart(<?php echo $row['id_sneaker']; ?>)">Añadir al Carrito</button>
-                </div>
-            </div>
-        <?php endwhile; ?>
-    </div>
-    <div class="texto-zapas"><h2 style="text-align:center;">Sneakers de Usuarios</h2></div>
-    <div class="product-container">
-       
-        <?php while ($row = $resultSneakersUsuarios->fetch_assoc()): ?>
-            <div class="product-card" id="product-<?php echo $row['id_sneaker']; ?>">
-                <img src="../imagenes/<?php echo $row['imagen_url']; ?>" alt="<?php echo $row['nombre_sneaker']; ?>">
-                <div class="product-info">
-                    <h3><?php echo $row['nombre_sneaker']; ?></h3>
-                    <p>Marca: <?php echo $row['marca']; ?></p>
-                    <p>Talla: <?php echo $row['talla']; ?></p>
-                    <p>Precio: €<?php echo $row['precio']; ?></p>
-                    <p>Vendedor: <?php echo $row['usuario_nombre']; ?></p>
                     <p id="stock-<?php echo $row['id_sneaker']; ?>">Stock: <?php echo $row['stock']; ?></p>
                     <button class="add-to-cart" id="button-<?php echo $row['id_sneaker']; ?>" onclick="addToCart(<?php echo $row['id_sneaker']; ?>)">Añadir al Carrito</button>
                 </div>
@@ -162,5 +182,7 @@ $resultSneakersUsuarios = $conn->query($sqlSneakersUsuarios);
 </html>
 
 <?php
+$stmtSneakers->close();
+$stmtSneakersUsuarios->close();
 $conn->close();
 ?>

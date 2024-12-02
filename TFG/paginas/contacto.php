@@ -11,12 +11,14 @@
     <?php include '../indice/header.php'; ?>
     <style>
         body {
-            font-family: Arial, sans-serif;
+           
             background: linear-gradient(120deg, #f0ece6, #d8c3a5);
             margin: 0;
             padding: 0;
         }
-
+*{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
         .contact-container {
             max-width: 1000px;
             margin: 50px auto;
@@ -273,7 +275,7 @@
             continuación.</p>
 
         <div class="contact-form">
-            <form action="send_contact.php" method="POST">
+            <form action="" method="POST" onsubmit="return showAlert()">
                 <label for="name">Nombre:</label>
                 <input type="text" id="name" name="name" required>
 
@@ -286,6 +288,14 @@
                 <button type="submit">Enviar Mensaje</button>
             </form>
         </div>
+
+        <script>
+            function showAlert() {
+                alert("El mensaje ha sido enviado de manera correcta.");
+                return true;
+            }
+        </script>
+
 
         <div class="contact-info">
             <div class="contact-card">

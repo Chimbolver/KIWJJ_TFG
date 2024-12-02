@@ -12,7 +12,7 @@ if (!isset($_SESSION['cart'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="header_styles.css">
+    <link rel="stylesheet" href="../indice/header_styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Header - KICK IT WITH JJ</title>
 </head>
@@ -45,7 +45,11 @@ if (!isset($_SESSION['cart'])) {
                     <span>Bienvenido, <?php echo $_SESSION['user_name']; ?></span>
                     <button class="dropdown-button" onclick="toggleDropdown()">▼</button>
                     <div class="dropdown-menu" id="dropdownMenu">
-                        <a class="editar" href="edit_profile.php">Editar Perfil</a>
+                        <?php if (($_SESSION['user_name']) == "admin") {
+                            echo "<a class='editar' href='../paginas/crear_subasta.php'>Crear subasta</a>";
+                            echo "<a class='editar' href='../paginas/editar_productos.php'>Editar zapas</a>";
+                        } ?>
+
                         <a class="editar" href="../indice/logout.php" onclick="return confirmLogout()">Logout</a>
                     </div>
                 </div>

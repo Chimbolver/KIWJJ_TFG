@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="footer_styles.css">
+    <link rel="stylesheet" href="../indice/footer_styles.css">
     <title>Footer - KICK IT WITH JJ</title>
 </head>
 

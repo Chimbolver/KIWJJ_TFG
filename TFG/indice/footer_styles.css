@@ -65,8 +65,8 @@
 }
 
 .social-icons a:hover {
+    transform: rotate(360deg) scale(1.4);
     color: #cfe2a5;
-    transform: scale(1.2);
 
 }
 

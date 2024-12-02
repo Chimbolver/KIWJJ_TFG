@@ -1,6 +1,6 @@
 <?php
 session_start();
-$error = ""; 
+$error = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $nombre = trim(htmlspecialchars($_POST['nombre']));
@@ -14,8 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Todos los campos son obligatorios.";
     } elseif ($password !== $confirm_password) {
         $error = "Las contraseñas no coinciden.";
+    } elseif (!preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/', $password)) {
+        $error = "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula, un número y un carácter especial.";
     } else {
-        // Verificar edad mínima
         $fecha_actual = new DateTime();
         $fecha_nac = new DateTime($fecha_nacimiento);
         $edad = $fecha_actual->diff($fecha_nac)->y;
@@ -29,15 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($conn->connect_error) {
                 die("Error de conexión: " . $conn->connect_error);
             }
-
-            // Verificar si el correo ya está registrado
             $sql = "SELECT * FROM usuarios WHERE email = '$email'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
                 $error = "El email ya está registrado.";
             } else {
-                // Insertar nuevo usuario
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
                 $sql = "INSERT INTO usuarios (nombre, email, contraseña, fecha_nacimiento) VALUES ('$nombre', '$email', '$hashed_password', '$fecha_nacimiento')";
 
@@ -48,8 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     exit;
                 } else {
                     $error = "Error al registrar usuario: " . $conn->error;
-
-                    // Registrar error en un archivo
                     $errorMessage = "[" . date("Y-m-d H:i:s") . "] Error al registrar usuario: " . $conn->error . "\n";
                     file_put_contents("error_log.txt", $errorMessage, FILE_APPEND);
                 }
@@ -62,18 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - KICK IT WITH JJ</title>
     <link rel="stylesheet" href="styles_registro.css">
 </head>
+
 <body>
 
-<a href="../indice/index.php"><img src="../imagenes/logo.png" alt="logo.png" class="logo"></a>
+    <a href="../indice/index.php"><img src="../imagenes/logo.png" alt="logo.png" class="logo"></a>
     <div class="registro-container">
         <h1 class="titulo-container">Registro</h1><br>
-        <form method="POST" action="registro.php">
+        <form method="POST" action="registro.php" onsubmit="return validarContrasena()">
             <div class="input-group">
                 <input type="text" name="nombre" required>
                 <label>Nombre</label>
@@ -119,6 +117,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 passwordInput.type = "password";
                 icon.textContent = "👁️";
             }
+        }
+
+        function validarContrasena() {
+            const password = document.getElementById("password").value;
+            const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!regex.test(password)) {
+                alert("La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, una minúscula, un número y un carácter especial.");
+                return false;
+            }
+            return true;
         }
     </script>
 </body>
